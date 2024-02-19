@@ -60,6 +60,7 @@ android {
         implementation "androidx.constraintlayout:constraintlayout:2.0"
         implementation 'com.google.android.material:material:1.4.0'
         implementation 'com.github.yuriy-budiyev:code-scanner:2.3.0'
+        implementation 'com.google.code.gson:gson:2.10.1'
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.mockito:mockito-core:5.0.0'
     }

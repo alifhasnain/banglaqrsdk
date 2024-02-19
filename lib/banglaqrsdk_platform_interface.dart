@@ -23,11 +23,10 @@ abstract class BanglaqrsdkPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
-  }
-
-  Future<bool?> initializeBanglaQRSdk() {
+  Future<String?> initializeBanglaQRSdk({
+    required String primaryColorCode,
+    required String secondaryColorCode,
+  }) {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 }

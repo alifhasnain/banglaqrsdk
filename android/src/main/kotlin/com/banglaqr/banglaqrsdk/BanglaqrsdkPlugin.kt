@@ -2,6 +2,7 @@ package com.banglaqr.banglaqrsdk
 
 import android.content.Context
 import android.util.Log
+import com.google.gson.Gson
 import com.sslwireless.banglaqrsdk.model.BanglaQRInitialization
 import com.sslwireless.banglaqrsdk.model.QRResponse
 import com.sslwireless.banglaqrsdk.view.singleton.IntegrateBanglaQR
@@ -24,6 +25,7 @@ class BanglaqrsdkPlugin : FlutterPlugin, MethodCallHandler, BanglaQRResponseList
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
     private lateinit var context: Context
+    private lateinit var result: Result
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
@@ -32,21 +34,27 @@ class BanglaqrsdkPlugin : FlutterPlugin, MethodCallHandler, BanglaQRResponseList
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
+        this.result = result
         when (call.method) {
-//      "getPlatformVersion" -> {
-//        result.success("Android ${android.os.Build.VERSION.RELEASE}")
-//      }
+
+
             "initializeBanglaQRSdk" -> {
                 Log.d("initializeBanglaQRSdk", "Initializing BanglaQR SDK")
-                val banglaQR = BanglaQRInitialization(
-                    BanglaQRFundingSource.FundingSource.VISA,
-                    "#6200EE",
-                    "#03DAC6"
-                )
+                val args = call.arguments as? Map<*, *>
+                if (args != null) {
+                    val primaryColorCode: String = args["primaryColorCode"].toString()
+                    val secondaryColorCode: String = args["secondaryColorCode"].toString()
 
-                IntegrateBanglaQR.getInstance(this.context).addBanglaQRInitialization(banglaQR)
-                    .build(this)
-                result.success(true)
+                    val banglaQR = BanglaQRInitialization(
+                        BanglaQRFundingSource.FundingSource.VISA,
+                        primaryColorCode,
+                        secondaryColorCode,
+                    )
+
+                    IntegrateBanglaQR.getInstance(this.context).addBanglaQRInitialization(banglaQR)
+                        .build(this)
+                }
+
             }
 
             else -> result.notImplemented()
@@ -58,9 +66,12 @@ class BanglaqrsdkPlugin : FlutterPlugin, MethodCallHandler, BanglaQRResponseList
     }
 
     override fun banglaQRFailResponse(failResponse: String) {
+        this.result.error("0", failResponse, null)
+        //  this.result.success(failResponse)
     }
 
     override fun banglaQRSuccessResponse(qrResponse: QRResponse) {
+        this.result.success(Gson().toJson(qrResponse))
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
@@ -78,3 +89,4 @@ class BanglaqrsdkPlugin : FlutterPlugin, MethodCallHandler, BanglaQRResponseList
     override fun onDetachedFromActivity() {
     }
 }
+
