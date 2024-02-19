@@ -53,10 +53,8 @@ class BanglaqrsdkPlugin: FlutterPlugin, MethodCallHandler, BanglaQRResponseListe
   }
 
   override fun banglaQRFailResponse(failResponse: String) {
-    TODO("Not yet implemented")
   }
 
   override fun banglaQRSuccessResponse(qrResponse: QRResponse) {
-    TODO("Not yet implemented")
   }
 }
