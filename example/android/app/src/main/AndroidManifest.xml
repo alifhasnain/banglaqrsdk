@@ -2,7 +2,7 @@
     <application
         android:label="banglaqrsdk_example"
         android:name="${applicationName}"
-        tools:node="replace"
+        tools:replace="android:label"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

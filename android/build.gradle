@@ -49,6 +49,8 @@ android {
 
     defaultConfig {
         minSdkVersion 21
+        multiDexEnabled true
+        dataBinding.enabled = true
     }
 
     dependencies {
@@ -112,7 +114,7 @@ task useAar {
             project.file(metadataPath + ".md5").write(getFileMD5(project.file(metadataPath)))
             project.file(metadataPath + ".sha1").write(getFileSha1(project.file(metadataPath)))
             dependencies {
-                implementation "${aarInfo[0]}:${aarInfo[1]}:${aarInfo[2]}"
+                api "${aarInfo[0]}:${aarInfo[1]}:${aarInfo[2]}"
             }
         }
     }
