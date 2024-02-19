@@ -1,7 +1,7 @@
 name: banglaqrsdk
-description: A new Flutter plugin project.
+description: Flutter plugin for BanglaQr SDK.
 version: 0.0.1
-homepage:
+homepage: https://github.com/alifhasnain/banglaqrsdk
 
 environment:
   sdk: '>=3.0.2 <4.0.0'
